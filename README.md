@@ -1,52 +1,54 @@
-# 🌮 TACO MCP Server
+# 🌮 TACO MCP Server - Tabela Nutricional Brasileira para Agentes de IA
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![MCP Protocol](https://img.shields.io/badge/MCP-Model%20Context%20Protocol-green.svg)](https://modelcontextprotocol.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![TACO Database](https://img.shields.io/badge/TACO-597%20foods-orange.svg)](https://www.nepa.unicamp.br/taco/)
+[![TACO Database](https://img.shields.io/badge/TACO-597%20alimentos-orange.svg)](https://www.nepa.unicamp.br/taco/)
 
-> **Model Context Protocol (MCP) server for the Brazilian TACO nutritional database.**
+> **Servidor MCP (Model Context Protocol) para a Tabela TACO de composição de alimentos brasileiros.**
 
-Enable AI agents to search, calculate, and log Brazilian foods with accurate macro-nutritional data. Perfect for fitness apps, nutrition coaches, and personal food logging systems.
+Conecte agentes de inteligência artificial à maior base de dados nutricionais do Brasil. Calcule calorias, proteínas, carboidratos e gorduras de 597 alimentos brasileiros oficiais. Ideal para apps de dieta, coaching nutricional e controle de macros.
+
+[📖 English Version](README_EN.md)
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Instalação Rápida
 
-### Prerequisites
+### Pré-requisitos
 
 - Python 3.11+
-- [uv](https://docs.astral.sh/uv/) (recommended) or pip
+- [uv](https://docs.astral.sh/uv/) (recomendado) ou pip
 
-### Installation
+### Passo a Passo
 
 ```bash
-# Clone the repository
+# Clone o repositório
 git clone https://github.com/matheusbuniotto/taco-mcp.git
 cd taco-mcp
 
-# Install dependencies
+# Instale as dependências
 uv venv
 source .venv/bin/activate  # Linux/Mac
-# or: .venv\Scripts\activate  # Windows
+# ou: .venv\Scripts\activate  # Windows
 
 uv pip install -e "."
 
-# Download and build TACO database
+# Baixe e construa a base de dados TACO
 python scripts/download_taco.py
 python scripts/build_db.py
 
-# Start MCP server
+# Inicie o servidor MCP
 python -m taco_mcp.server
 ```
 
 ---
 
-## 🔗 Integrations
+## 🔗 Integrações Disponíveis
 
 ### Hermes Agent
 
-Add to `~/.hermes/config.yaml`:
+Adicione ao seu `~/.hermes/config.yaml`:
 
 ```yaml
 mcp_servers:
@@ -55,25 +57,23 @@ mcp_servers:
     args:
       - "run"
       - "--project"
-      - "/path/to/taco-mcp"
+      - "/caminho/para/taco-mcp"
       - "python"
       - "-m"
       - "taco_mcp.server"
     timeout: 30
 ```
 
-Tools become available as:
-- `mcp_taco_search_food`
-- `mcp_taco_get_food`
-- `mcp_taco_calculate_macros`
-- `mcp_taco_calculate_meal_macros`
-- `mcp_taco_add_custom_food`
-- `mcp_taco_list_custom_foods`
-- `mcp_taco_delete_custom_food`
+As ferramentas aparecerão como:
+- `mcp_taco_search_food` - Buscar alimentos
+- `mcp_taco_get_food` - Detalhes do alimento
+- `mcp_taco_calculate_macros` - Calcular macros por grama
+- `mcp_taco_calculate_meal_macros` - Calcular refeição completa
+- `mcp_taco_add_custom_food` - Adicionar alimento customizado
+- `mcp_taco_list_custom_foods` - Listar customizados
+- `mcp_taco_delete_custom_food` - Remover customizado
 
-### Claude Desktop / Other MCP Clients
-
-Add to your MCP client config:
+### Claude Desktop / Outros Clientes MCP
 
 ```json
 {
@@ -83,7 +83,7 @@ Add to your MCP client config:
       "args": [
         "run",
         "--project",
-        "/path/to/taco-mcp",
+        "/caminho/para/taco-mcp",
         "python",
         "-m",
         "taco_mcp.server"
@@ -95,35 +95,36 @@ Add to your MCP client config:
 
 ---
 
-## 📊 Data Source
+## 📊 Base de Dados TACO
 
-**TACO** (Tabela Brasileira de Composição de Alimentos) is the official Brazilian food composition database maintained by UNICAMP.
+A **TACO** (Tabela Brasileira de Composição de Alimentos) é mantida pela UNICAMP/NEPA e é a referência oficial para nutrição no Brasil.
 
-- **597 foods** from 20+ categories
-- 28 nutritional components per food
-- Values per 100g edible portion
-- Official source: https://www.nepa.unicamp.br/taco/
+- **597 alimentos** em mais de 20 categorias
+- 28 componentes nutricionais por alimento
+- Valores por 100g de porção comestível
+- Fonte oficial: https://www.nepa.unicamp.br/taco/
 
-### Categories Covered
+### Categorias de Alimentos
 
 ```
-Cereais e derivados          | Frutas e derivados
-Verduras, hortaliças         | Gorduras e óleos
-Pescados e frutos do mar     | Carnes e derivados
-Leite e derivados            | Bebidas
-Ovos e derivados             | Produtos açucarados
-Miscelâneas                  | Industrializados
+Cereais e derivados              | Frutas e derivados
+Verduras, hortaliças             | Gorduras e óleos
+Pescados e frutos do mar         | Carnes e derivados
+Leite e derivados                | Bebidas (alcoólicas e não)
+Ovos e derivados                 | Produtos açucarados
+Miscelâneas                      | Alimentos industrializados
+Leguminosas                      | Nozes e sementes
 ```
 
 ---
 
-## 🛠️ Available Tools
+## 🛠️ Ferramentas Disponíveis
 
-### Core Tools
+### Busca e Consulta
 
-#### `search_food`
+#### `search_food` - Buscar Alimentos
 
-Search foods by name in Portuguese. Returns candidates from both TACO and custom foods.
+Busque alimentos por nome em português. Retorna candidatos do TACO e alimentos customizados.
 
 ```json
 {
@@ -132,7 +133,7 @@ Search foods by name in Portuguese. Returns candidates from both TACO and custom
 }
 ```
 
-**Response:**
+**Resposta:**
 ```json
 {
   "query": "arroz",
@@ -157,9 +158,7 @@ Search foods by name in Portuguese. Returns candidates from both TACO and custom
 }
 ```
 
-#### `get_food`
-
-Get detailed food information by ID.
+#### `get_food` - Detalhes do Alimento
 
 ```json
 {
@@ -167,9 +166,9 @@ Get detailed food information by ID.
 }
 ```
 
-#### `calculate_macros`
+#### `calculate_macros` - Calcular Macronutrientes
 
-Calculate macros for a specific gram amount.
+Calcule calorias e macros para uma quantidade específica em gramas.
 
 ```json
 {
@@ -178,7 +177,7 @@ Calculate macros for a specific gram amount.
 }
 ```
 
-**Response:**
+**Resposta:**
 ```json
 {
   "food_id": 3,
@@ -195,9 +194,7 @@ Calculate macros for a specific gram amount.
 }
 ```
 
-#### `calculate_meal_macros`
-
-Calculate total macros for a meal with multiple items.
+#### `calculate_meal_macros` - Calcular Refeição Completa
 
 ```json
 {
@@ -208,7 +205,7 @@ Calculate total macros for a meal with multiple items.
 }
 ```
 
-**Response:**
+**Resposta:**
 ```json
 {
   "source": "TACO",
@@ -222,11 +219,11 @@ Calculate total macros for a meal with multiple items.
 }
 ```
 
-### Custom Foods
+### Alimentos Customizados
 
-#### `add_custom_food`
+#### `add_custom_food` - Adicionar Suplemento ou Marca
 
-Add supplements, branded products, or homemade recipes.
+Adicione whey protein, creatina, barras de proteína ou receitas caseiras.
 
 ```json
 {
@@ -240,11 +237,9 @@ Add supplements, branded products, or homemade recipes.
 }
 ```
 
-**Custom food IDs start at 100000** to avoid conflicts with TACO IDs (1-597).
+**IDs de alimentos customizados começam em 100000** para evitar conflito com o TACO (1-597).
 
-#### `list_custom_foods`
-
-List all custom foods added.
+#### `list_custom_foods` - Listar Customizados
 
 ```json
 {
@@ -252,9 +247,7 @@ List all custom foods added.
 }
 ```
 
-#### `delete_custom_food`
-
-Remove a custom food by ID.
+#### `delete_custom_food` - Remover Alimento
 
 ```json
 {
@@ -264,42 +257,42 @@ Remove a custom food by ID.
 
 ---
 
-## 🎯 Usage Examples
+## 🎯 Exemplos de Uso
 
-### Natural Language Food Logging
+### Diário Alimentar em Linguagem Natural
 
-**User:** "Comi 150g de arroz e 100g de frango"
+**Usuário:** "Comi 150g de arroz e 100g de frango"
 
-**Agent workflow:**
+**Fluxo do agente:**
 
 ```python
-# 1. Parse the query
-items = [
+# 1. Extrai os itens
+itens = [
     ("arroz", 150),
     ("frango", 100)
 ]
 
-# 2. Search for foods
-search_food("arroz")     # Returns: Arroz, tipo 1, cozido (ID 3)
-search_food("frango")    # Returns: Frango, peito, grelhado (ID 410)
+# 2. Busca os alimentos
+search_food("arroz")     # Retorna: Arroz, tipo 1, cozido (ID 3)
+search_food("frango")    # Retorna: Frango, peito, grelhado (ID 410)
 
-# 3. Calculate meal macros
+# 3. Calcula a refeição
 calculate_meal_macros([
     {"food_id": 3, "grams": 150},
     {"food_id": 410, "grams": 100}
 ])
 
-# 4. Present to user
-# "Total: 351 kcal (35.8g protein, 42.2g carbs, 2.8g fat)"
+# 4. Apresenta ao usuário
+# "Total: 351 kcal (35.8g proteína, 42.2g carboidratos, 2.8g gorduras)"
 ```
 
-### Adding Supplements
+### Adicionando Suplementos
 
-**User:** "Add my protein powder: 110 kcal, 24g protein per scoop"
+**Usuário:** "Cadastra meu whey: 110 kcal, 24g proteína por scoop"
 
 ```python
 add_custom_food(
-    name="My Whey Protein",
+    name="Meu Whey Protein",
     kcal_per_100g=367,  # 110 * 100/30
     protein_g_per_100g=80,
     category="Suplementos",
@@ -309,9 +302,9 @@ add_custom_food(
 
 ---
 
-## 🌐 Aliases System
+## 🌐 Sistema de Apelidos (Aliases)
 
-Common food aliases are mapped for better natural language matching:
+Mapeamento de termos comuns para facilitar busca em linguagem natural:
 
 ```yaml
 # data/aliases.yaml
@@ -322,90 +315,94 @@ frango: 410                 # Peito grelhado
 peito de frango: 410
 ovo: 199                    # Ovo cozido
 banana: 78                  # Banana prata
-whey: 100001                # Your custom whey
+feijao: 175                 # Feijão carioca
+batata: 156                 # Batata inglesa cozida
+pao: 51                     # Pão francês
 ```
 
-Aliases ensure that when users say "comi arroz", the system returns the most common preparation (arroz branco cozido) rather than requiring exact database matches.
+Os aliases garantem que quando o usuário diz "comi arroz", o sistema retorne o preparo mais comum (arroz branco cozido) ao invés de exigir correspondência exata.
 
 ---
 
-## 🎨 Architecture
+## 🎨 Arquitetura
 
 ```
-├── TACO CSV (597 foods)
+├── CSV TACO (597 alimentos)
 │   └── download_taco.py
-├── SQLite Database
-│   ├── foods table (TACO data)
-│   ├── foods_fts (FTS5 full-text search)
-│   ├── custom_foods table (user-added)
+├── Banco SQLite
+│   ├── tabela foods (dados TACO)
+│   ├── tabela foods_fts (busca FTS5)
+│   ├── tabela custom_foods (alimentos do usuário)
 │   └── build_db.py
-├── MCP Server
+├── Servidor MCP
 │   ├── search_food (FTS5 + aliases)
 │   ├── calculate_macros
 │   ├── calculate_meal_macros
-│   └── custom_food management
-└── Hermes/Claude/Any MCP Client
+│   └── Gerenciamento de custom_foods
+└── Cliente MCP (Hermes, Claude, etc.)
 ```
 
-### Design Decisions
+### Decisões de Design
 
-| Decision | Rationale |
-|----------|-----------|
-| **SQLite + FTS5** | No external services, fast full-text search |
-| **No embeddings** | TACO is small (~600 items); FTS5 is sufficient |
-| **Custom food IDs offset (100000+)** | Prevents collision with official TACO IDs |
-| **Aliases layer** | Handles natural language variation ("arroz" vs "arroz branco") |
-| **Portuguese normalization** | Removes accents for better matching |
+| Decisão | Motivação |
+|---------|-----------|
+| **SQLite + FTS5** | Sem serviços externos, busca full-text rápida |
+| **Sem embeddings** | Base pequena (~600 itens); FTS5 é suficiente |
+| **Offset de IDs (100000+)** | Evita colisão com IDs oficiais do TACO |
+| **Camada de aliases** | Lida com variação de linguagem natural |
+| **Normalização PT-BR** | Remove acentos para melhor matching |
 
 ---
 
-## 📁 Project Structure
+## 📁 Estrutura do Projeto
 
 ```
 taco-mcp/
 ├── data/
 │   ├── raw/
-│   │   └── alimentos.csv          # TACO source data
+│   │   └── alimentos.csv          # Dados fonte TACO
 │   ├── processed/
-│   │   └── taco.sqlite            # SQLite database
-│   └── aliases.yaml              # Food name aliases
+│   │   └── taco.sqlite            # Banco SQLite
+│   └── aliases.yaml              # Apelidos de alimentos
 ├── scripts/
-│   ├── download_taco.py          # Download TACO CSV
-│   └── build_db.py               # Build SQLite database
+│   ├── download_taco.py          # Download do CSV TACO
+│   └── build_db.py               # Constrói banco SQLite
 ├── src/taco_mcp/
 │   ├── __init__.py
-│   ├── server.py                 # MCP server implementation
-│   ├── db.py                     # Database operations
-│   ├── schemas.py                # Pydantic models
-│   └── normalize.py              # Text/numeric normalization
+│   ├── server.py                 # Implementação MCP
+│   ├── db.py                     # Operações de banco
+│   ├── schemas.py                # Modelos Pydantic
+│   └── normalize.py              # Normalização de texto
 ├── tests/
 │   ├── test_db.py
 │   └── test_normalize.py
 ├── pyproject.toml
-└── README.md
+├── README.md
+├── README_EN.md
+└── LICENSE
 ```
 
 ---
 
-## 🧪 Development
+## 🧪 Desenvolvimento
 
-### Running Tests
+### Executar Testes
 
 ```bash
 uv pip install pytest
 python -m pytest tests/ -v
 ```
 
-### Adding Aliases
+### Adicionar Aliases
 
-Edit `data/aliases.yaml`:
+Edite `data/aliases.yaml`:
 
 ```yaml
-my_custom_alias: 100001
-# Map common terms to food IDs
+meu_apelido_customizado: 100001
+# Mapeie termos comuns para IDs de alimentos
 ```
 
-### Rebuilding Database
+### Reconstruir Base de Dados
 
 ```bash
 python scripts/download_taco.py --force
@@ -416,35 +413,35 @@ python scripts/build_db.py
 
 ## 📋 Roadmap
 
-- [ ] Recipe builder (combine multiple foods into a single recipe)
-- [ ] Barcode lookup integration
-- [ ] Portion size estimation ("1 prato", "1 concha")
-- [ ] Nutrition goal tracking (daily totals)
-- [ ] Multi-language support (English descriptions)
+- [ ] Construtor de receitas (combinar múltiplos alimentos)
+- [ ] Integração com busca por código de barras
+- [ ] Estimativa de porções ("1 prato", "1 concha", "1 fatia")
+- [ ] Acompanhamento de metas diárias
+- [ ] Suporte multilíngue (descrições em inglês)
 
 ---
 
-## 📋 License
+## 📋 Licença
 
-MIT License - see [LICENSE](LICENSE)
-
----
-
-## 🪝 Acknowledgments
-
-- **UNICAMP/NEPA** for maintaining the TACO database
-- **Model Context Protocol** team for the MCP specification
-- **machine-learning-mocha** for the CSV export on GitHub
+MIT License - veja [LICENSE](LICENSE)
 
 ---
 
-## 📞 Support
+## 🪝 Agradecimentos
+
+- **UNICAMP/NEPA** por manter a base TACO
+- **Model Context Protocol** pela especificação MCP
+- **machine-learning-mocha** pela exportação CSV no GitHub
+
+---
+
+## 📞 Suporte
 
 - 🐛 Issues: [github.com/matheusbuniotto/taco-mcp/issues](https://github.com/matheusbuniotto/taco-mcp/issues)
-- 📝 Discussions: [GitHub Discussions](https://github.com/matheusbuniotto/taco-mcp/discussions)
+- 📝 Discussões: [GitHub Discussions](https://github.com/matheusbuniotto/taco-mcp/discussions)
 
 ---
 
 <p align="center">
-  <i>Built with ❤️ for Brazilian nutrition tracking</i>
+  <i>Feito com ❤️ para a nutrição brasileira</i>
 </p>
