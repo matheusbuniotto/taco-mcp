@@ -15,57 +15,59 @@ Conecte agentes de inteligência artificial à maior base de dados nutricionais 
 
 ## 🚀 Instalação Rápida
 
-### Pré-requisitos
+**Requisito:** Python 3.11+
 
-- Python 3.11+
-- [uv](https://docs.astral.sh/uv/) (recomendado) ou pip
-
-### Passo a Passo
-
-```bash
-# Clone o repositório
-git clone https://github.com/matheusbuniotto/taco-mcp.git
-cd taco-mcp
-
-# Instale as dependências
-uv venv
-source .venv/bin/activate  # Linux/Mac
-# ou: .venv\Scripts\activate  # Windows
-
-uv pip install -e "."
-
-# Pronto! O banco de dados já está incluído (~650KB)
-python -m taco_mcp.server
-```
-
-Ou instale diretamente do GitHub (sem clone):
+### Opção 1: Instalação Simples (Recomendada)
 
 ```bash
 pip install git+https://github.com/matheusbuniotto/taco-mcp.git
-python -m taco_mcp.server
+```
+
+Pronto! O comando `taco-mcp` está disponível globalmente.
+
+### Opção 2: Desenvolvimento (Clone)
+
+```bash
+git clone https://github.com/matheusbuniotto/taco-mcp.git
+cd taco-mcp
+pip install -e "."
 ```
 
 ---
 
-## 🔗 Integrações Disponíveis
+## 🔗 Integrações
 
-### Hermes Agent
+### Hermes Agent (Configuração Simples)
 
-Adicione ao seu `~/.hermes/config.yaml`:
+**Passo 1:** Instale o pacote
+```bash
+pip install git+https://github.com/matheusbuniotto/taco-mcp.git
+```
+
+**Passo 2:** Adicione ao `~/.hermes/config.yaml`:
 
 ```yaml
 mcp_servers:
   taco:
-    command: "uv"
-    args:
-      - "run"
-      - "--project"
-      - "/caminho/para/taco-mcp"
-      - "python"
-      - "-m"
-      - "taco_mcp.server"
+    command: "taco-mcp"
     timeout: 30
 ```
+
+Pronto! Reinicie o Hermes e as ferramentas estarão disponíveis.
+
+### Configuração Alternativa (sem instalação global)
+
+Se preferir não instalar globalmente:
+
+```yaml
+mcp_servers:
+  taco:
+    command: "python"
+    args: ["-m", "taco_mcp.server"]
+    timeout: 30
+```
+
+(Necessita ter o repo clonado e estar no diretório do projeto)
 
 As ferramentas aparecerão como:
 - `mcp_taco_search_food` - Buscar alimentos
@@ -78,23 +80,27 @@ As ferramentas aparecerão como:
 
 ### Claude Desktop / Outros Clientes MCP
 
+**Clique-e-Configure:**
+
+Edite seu arquivo de configuração do Claude Desktop:
+
+- **Windows:** `%APPDATA%\Claude\settings.json`
+- **Mac:** `~/Library/Application Support/Claude/settings.json`
+- **Linux:** `~/.config/Claude/settings.json`
+
+Adicione:
+
 ```json
 {
   "mcpServers": {
     "taco": {
-      "command": "uv",
-      "args": [
-        "run",
-        "--project",
-        "/caminho/para/taco-mcp",
-        "python",
-        "-m",
-        "taco_mcp.server"
-      ]
+      "command": "taco-mcp"
     }
   }
 }
 ```
+
+Reinicie o Claude Desktop.
 
 ---
 
@@ -392,7 +398,7 @@ taco-mcp/
 ### Executar Testes
 
 ```bash
-uv pip install pytest
+pip install pytest
 python -m pytest tests/ -v
 ```
 

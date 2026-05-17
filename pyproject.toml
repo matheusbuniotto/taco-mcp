@@ -1,12 +1,16 @@
 [project]
 name = "taco-mcp"
 version = "0.1.0"
-description = "MCP server for Brazilian TACO nutritional table"
+description = "MCP server for Brazilian TACO nutritional database"
 requires-python = ">=3.10"
 dependencies = [
     "mcp>=1.0.0",
     "pyyaml>=6.0",
 ]
+
+[project.scripts]
+taco-mcp = "taco_mcp.server:main"
+taco-mcp-server = "taco_mcp.server:main"
 
 [project.optional-dependencies]
 dev = [

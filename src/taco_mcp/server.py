@@ -424,7 +424,7 @@ async def call_tool(name: str, arguments: Any) -> list[TextContent]:
         )]
 
 
-async def main():
+async def _async_main():
     """Run MCP server."""
     # Check database exists
     if not DB_PATH.exists():
@@ -440,6 +440,11 @@ async def main():
         )
 
 
-if __name__ == "__main__":
+def main():
+    """Entry point for CLI."""
     import asyncio
-    asyncio.run(main())
+    asyncio.run(_async_main())
+
+
+if __name__ == "__main__":
+    main()
