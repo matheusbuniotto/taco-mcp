@@ -1,0 +1,88 @@
+# Aliases comuns para alimentos da TACO
+# formato: alias: food_id (database id, not source_id)
+
+# Arroz
+arroz: 3
+arroz branco: 3
+arroz cozido: 3
+arroz tipo 1: 3
+arroz integral: 1
+arroz tipo 2: 5
+
+# Frango - IDs based on database sequential id
+frango: 410
+peito de frango: 410
+frango grelhado: 410
+frango cozido: 408
+frango peito: 410
+frango coxa: 396
+sobrecoxa: 397
+
+# Ovos
+ovo: 199
+ovo cozido: 199
+ovo frito: 200
+
+# Banana
+banana: 78
+banana prata: 78
+banana nanica: 79
+banana da terra: 80
+
+# Carne
+carne moída: 249
+patinho moído: 249
+contra filé: 247
+picanha: 246
+alcatra: 245
+
+# Pão
+pão francês: 51
+pão: 51
+pão de forma: 52
+pão integral: 53
+
+# Mandioca
+mandioca: 155
+aipim: 155
+macaxeira: 155
+
+# Feijão
+feijão: 175
+feijão carioca: 175
+feijão preto: 177
+feijão cozido: 175
+
+# Batata
+batata: 156
+batata inglesa: 156
+batata cozida: 156
+
+# Leite
+leite: 118
+leite integral: 118
+leite desnatado: 119
+
+# Queijo
+queijo: 140
+queijo muçarela: 140
+queijo prato: 142
+queijo cottage: 138
+
+# Macarrão
+macarrão: 67
+espaguete: 67
+macarrão cozido: 67
+
+# Café
+café: 436
+café passado: 436
+
+# Açúcar
+acucar: 432
+acucar refinado: 432
+
+# Óleo
+óleo: 458
+óleo de soja: 458
+óleo vegetal: 458
