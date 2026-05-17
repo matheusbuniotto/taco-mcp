@@ -13,57 +13,59 @@ Enable AI agents to search, calculate, and log Brazilian foods with accurate mac
 
 ## 🚀 Quick Start
 
-### Prerequisites
+**Requirement:** Python 3.11+
 
-- Python 3.11+
-- [uv](https://docs.astral.sh/uv/) (recommended) or pip
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/matheusbuniotto/taco-mcp.git
-cd taco-mcp
-
-# Install dependencies
-uv venv
-source .venv/bin/activate  # Linux/Mac
-# or: .venv\Scripts\activate  # Windows
-
-uv pip install -e "."
-
-# Ready to go! Database included (~650KB)
-python -m taco_mcp.server
-```
-
-Or install directly from GitHub (no clone needed):
+### Option 1: Simple Install (Recommended)
 
 ```bash
 pip install git+https://github.com/matheusbuniotto/taco-mcp.git
-python -m taco_mcp.server
+```
+
+Done! The `taco-mcp` command is now available globally.
+
+### Option 2: Development (Clone)
+
+```bash
+git clone https://github.com/matheusbuniotto/taco-mcp.git
+cd taco-mcp
+pip install -e "."
 ```
 
 ---
 
 ## 🔗 Integrations
 
-### Hermes Agent
+### Hermes Agent (Simple Config)
 
-Add to `~/.hermes/config.yaml`:
+**Step 1:** Install the package
+```bash
+pip install git+https://github.com/matheusbuniotto/taco-mcp.git
+```
+
+**Step 2:** Add to `~/.hermes/config.yaml`:
 
 ```yaml
 mcp_servers:
   taco:
-    command: "uv"
-    args:
-      - "run"
-      - "--project"
-      - "/path/to/taco-mcp"
-      - "python"
-      - "-m"
-      - "taco_mcp.server"
+    command: "taco-mcp"
     timeout: 30
 ```
+
+Done! Restart Hermes and the tools will be available.
+
+### Alternative Config (no global install)
+
+If you prefer not to install globally:
+
+```yaml
+mcp_servers:
+  taco:
+    command: "python"
+    args: ["-m", "taco_mcp.server"]
+    timeout: 30
+```
+
+(Requires repo to be cloned and in the project directory)
 
 Tools become available as:
 - `mcp_taco_search_food`
@@ -76,25 +78,27 @@ Tools become available as:
 
 ### Claude Desktop / Other MCP Clients
 
-Add to your MCP client config:
+**Point-and-Configure:**
+
+Edit your Claude Desktop settings file:
+
+- **Windows:** `%APPDATA%\Claude\settings.json`
+- **Mac:** `~/Library/Application Support/Claude/settings.json`
+- **Linux:** `~/.config/Claude/settings.json`
+
+Add:
 
 ```json
 {
   "mcpServers": {
     "taco": {
-      "command": "uv",
-      "args": [
-        "run",
-        "--project",
-        "/path/to/taco-mcp",
-        "python",
-        "-m",
-        "taco_mcp.server"
-      ]
+      "command": "taco-mcp"
     }
   }
 }
 ```
+
+Restart Claude Desktop.
 
 ---
 
@@ -395,7 +399,7 @@ taco-mcp/
 ### Running Tests
 
 ```bash
-uv pip install pytest
+pip install pytest
 python -m pytest tests/ -v
 ```
 
