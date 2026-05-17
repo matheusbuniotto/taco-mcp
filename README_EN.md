@@ -23,7 +23,19 @@ pip install git+https://github.com/matheusbuniotto/taco-mcp.git
 
 Done! The `taco-mcp` command is now available globally.
 
-### Option 2: Development (Clone)
+### Option 2: With uv (No global install)
+
+If you use [uv](https://docs.astral.sh/uv/):
+
+```bash
+# Run directly without installing
+uvx --from git+https://github.com/matheusbuniotto/taco-mcp.git taco-mcp
+
+# Or install in current environment
+uv pip install git+https://github.com/matheusbuniotto/taco-mcp.git
+```
+
+### Option 3: Development (Clone)
 
 ```bash
 git clone https://github.com/matheusbuniotto/taco-mcp.git
@@ -55,7 +67,17 @@ Done! Restart Hermes and the tools will be available.
 
 ### Alternative Config (no global install)
 
-If you prefer not to install globally:
+If you prefer not to install globally, use with **uv**:
+
+```yaml
+mcp_servers:
+  taco:
+    command: "uvx"
+    args: ["--from", "git+https://github.com/matheusbuniotto/taco-mcp.git", "taco-mcp"]
+    timeout: 30
+```
+
+Or with Python directly (requires clone):
 
 ```yaml
 mcp_servers:
@@ -64,8 +86,6 @@ mcp_servers:
     args: ["-m", "taco_mcp.server"]
     timeout: 30
 ```
-
-(Requires repo to be cloned and in the project directory)
 
 Tools become available as:
 - `mcp_taco_search_food`
