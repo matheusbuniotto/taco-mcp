@@ -21,6 +21,9 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["src/taco_mcp"]
 
+[tool.hatch.build.targets.wheel.force-include]
+"data/processed/taco.sqlite" = "taco_mcp/data/taco.sqlite"
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]

@@ -38,13 +38,10 @@ ENV/
 Thumbs.db
 
 # Database (large files)
-*.sqlite
+# Note: We include data/processed/taco.sqlite (~650KB) in the repo
 *.sqlite3
+*.db
 
 # Raw data (downloaded during setup)
 data/raw/alimentos.csv
-
-# Don't ignore processed data for distribution
-!data/processed/.gitkeep
-!data/raw/.gitkeep
 uv.lock

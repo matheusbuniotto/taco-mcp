@@ -22,11 +22,12 @@ from .schemas import (
 # Find database path - check multiple locations
 def find_db_path() -> Path:
     """Find database path, checking multiple locations."""
-    # Try project structure first
+    # Try installed package first (when installed via pip)
     candidates = [
-        Path(__file__).parent.parent.parent / "data" / "processed" / "taco.sqlite",
-        Path.cwd() / "data" / "processed" / "taco.sqlite",
-        Path.home() / ".local" / "share" / "taco-mcp" / "taco.sqlite",
+        Path(__file__).parent / "data" / "taco.sqlite",  # Installed package
+        Path(__file__).parent.parent.parent / "data" / "processed" / "taco.sqlite",  # Dev
+        Path.cwd() / "data" / "processed" / "taco.sqlite",  # CWD
+        Path.home() / ".local" / "share" / "taco-mcp" / "taco.sqlite",  # User data
     ]
     for path in candidates:
         if path.exists():

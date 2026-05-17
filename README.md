@@ -34,11 +34,14 @@ source .venv/bin/activate  # Linux/Mac
 
 uv pip install -e "."
 
-# Baixe e construa a base de dados TACO
-python scripts/download_taco.py
-python scripts/build_db.py
+# Pronto! O banco de dados já está incluído (~650KB)
+python -m taco_mcp.server
+```
 
-# Inicie o servidor MCP
+Ou instale diretamente do GitHub (sem clone):
+
+```bash
+pip install git+https://github.com/matheusbuniotto/taco-mcp.git
 python -m taco_mcp.server
 ```
 
