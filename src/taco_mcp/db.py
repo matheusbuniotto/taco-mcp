@@ -25,8 +25,12 @@ class TacoDB:
     
     def _load_aliases(self):
         """Load aliases from YAML file."""
-        aliases_path = Path(__file__).parent.parent.parent / "data" / "aliases.yaml"
-        if aliases_path.exists():
+        candidates = [
+            Path(__file__).parent / "data" / "aliases.yaml",  # Installed package
+            Path(__file__).parent.parent.parent / "data" / "aliases.yaml",  # Dev
+        ]
+        aliases_path = next((path for path in candidates if path.exists()), None)
+        if aliases_path is not None:
             with open(aliases_path, 'r', encoding='utf-8') as f:
                 self._aliases = yaml.safe_load(f) or {}
         else:

@@ -2,11 +2,21 @@
 name = "taco-mcp"
 version = "0.1.0"
 description = "MCP server for Brazilian TACO nutritional database"
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "Matheus Buniotto", email = "matheus@buniotto.dev" }]
 requires-python = ">=3.10"
 dependencies = [
-    "mcp>=1.0.0",
+    # The server uses the low-level Server decorators (list_tools/call_tool),
+    # which were removed in mcp 2.x.
+    "mcp>=1.0.0,<2",
+    "pydantic>=2",
     "pyyaml>=6.0",
 ]
+
+[project.urls]
+Repository = "https://github.com/matheusbuniotto/taco-mcp"
+Issues = "https://github.com/matheusbuniotto/taco-mcp/issues"
 
 [project.scripts]
 taco-mcp = "taco_mcp.server:main"
@@ -27,6 +37,7 @@ packages = ["src/taco_mcp"]
 
 [tool.hatch.build.targets.wheel.force-include]
 "data/processed/taco.sqlite" = "taco_mcp/data/taco.sqlite"
+"data/aliases.yaml" = "taco_mcp/data/aliases.yaml"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
